@@ -53,9 +53,9 @@ class DiscoverPage extends StatelessWidget {
                     ),
                     const Gap(6),
                     Text(
-                      'Level 109',
+                      'Penyewa',
                       style: GoogleFonts.inter(
-                          fontSize: 14, color: const Color(0xFF909FB4)),
+                          fontSize: 14, color: Color.fromARGB(255, 48, 52, 59)),
                     ),
                   ],
                 )
@@ -75,28 +75,37 @@ class DiscoverPage extends StatelessWidget {
     var bids = [
       Bid(
           image:
-              'https://igdhuwnfxnlgnizlnjjc.supabase.co/storage/v1/object/public/images/cultures/6/tari-kijang-1.jpg',
-          title: "Tari Kijang",
-          ends: "10m 11s",
-          price: "4.5"),
+              'galeri-06.jpg',
+          title: "Coworking Shared",
+          ends: "Ruangan Berkapasitas 30 orang"),
       Bid(
           image:
-              'https://i.ytimg.com/vi/vdbrpyIQ_s0/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgXChaMA8=&rs=AOn4CLC0_WFFvQuE6_szUO-Zk-BWd5Hilw',
-          title: "Tari Kulinan",
-          ends: "12m 23s",
-          price: "4.8"),
+              'galeri-08.jpg',
+          title: "Coworking Private",
+          ends: "Ruangan Berkapasitas 30 orang"),
       Bid(
           image:
-              'https://igdhuwnfxnlgnizlnjjc.supabase.co/storage/v1/object/public/images/cultures/8/tari-kembang-buruan-1.jpg',
-          title: "Tari Kembang Baruan",
-          ends: "15m 11s",
-          price: "5.0")
+              'galeri-07.jpg',
+          title: "Rent Office",
+          ends: "Ruangan Berkapasitas 30 orang",
+          ),
+      Bid(
+          image:
+              'galeri-09.jpg',
+          title: "R. Meeting",
+          ends: "Ruangan Berkapasitas 30 orang"),
+      Bid(
+          image:
+              'galeri-05.jpg',
+          title: "Training Room",
+          ends: "Ruangan Berkapasitas 30 orang"
+      ),
     ];
 
     return Padding(
       padding: const EdgeInsets.only(top: 36),
       child: _listTile(
-        title: 'Mengenal Budaya Tari',
+        title: 'Ruangan Gedung B dan D',
         itemHeight: 268,
         itemCount: bids.length,
         itemBuilder: (context, index) => BidTileWidget(
@@ -110,17 +119,17 @@ class DiscoverPage extends StatelessWidget {
     var browse = [
       Browse(
           image:
-              'https://igdhuwnfxnlgnizlnjjc.supabase.co/storage/v1/object/public/images/crafts/1.png',
-          title: "Cangkir Daun Pisang",
+              'galeri-05.jpg',
+          title: "Aula",
           itemCount: 10000),
       Browse(
           image:
-              'https://igdhuwnfxnlgnizlnjjc.supabase.co/storage/v1/object/public/images/crafts/2.png',
-          title: "Membuat Sudi",
+              'galeri-07.jpg',
+          title: "Coworking Shared",
           itemCount: 10000),
       Browse(
           image:
-              "https://cdn0-production-images-kly.akamaized.net/bhRtPIXmpAgfo0ae_YHQGSS53zg=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4397082/original/040126000_1681619748-mufid-majnun-nrDFC5u6q9Y-unsplash.jpg",
+              "galeri-06.jpg",
           title: "Membuat Ketupat",
           itemCount: 10000),
     ];
@@ -128,7 +137,7 @@ class DiscoverPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 36),
       child: _listTile(
-        title: 'Belajar Membuat Kerajinan',
+        title: 'Ruangan Gedung C',
         itemHeight: 196,
         itemCount: browse.length,
         itemBuilder: (context, index) => BrowseTileWidget(
@@ -174,19 +183,19 @@ class DiscoverPage extends StatelessWidget {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem> [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home, color: Color.fromRGBO(118, 88, 39, 100)),
+          icon: Icon(Icons.home, color: Color(0xFFED3C35)),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.games_outlined, color: Color.fromRGBO(118, 88, 39, 100)),
+          icon: Icon(Icons.games_outlined, color: Color(0xFFED3C35)),
           label: 'Game',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.message_outlined, color: Color.fromRGBO(118, 88, 39, 100)),
+          icon: Icon(Icons.message_outlined, color: Color(0xFFED3C35)),
           label: 'Ulasan',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined, color: Color.fromRGBO(118, 88, 39, 100),),
+          icon: Icon(Icons.account_circle_outlined, color: Color(0xFFED3C35),),
           label: 'Akun'
         ),
       ],

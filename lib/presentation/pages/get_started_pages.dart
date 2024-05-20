@@ -17,15 +17,15 @@ class GetStartedPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 150,
-              width: 150,
-              child: Image.asset('assets/images/logo_started.png')),
+              height: 200,
+              width: 450,
+              child: Image.asset('assets/images/new-logo-2.png')),
             // Title
             const Gap(10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                'Belajar Budaya\nBermain Game Bersama',
+                'Bandung Techno Park',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                     color: const Color(0xFF0D1220),
@@ -35,19 +35,19 @@ class GetStartedPage extends StatelessWidget {
               ),
             ),
             // Subtitle
-            const Gap(20),
+            const Gap(0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22),
               child: Text(
-                'Kamu akan belajar hal yang menyenangkan tentang budaya yang beraneka ragam',
+                'Kamu bisa meminjam ruangan dengan cepat dan mudah untuk berbagai keperluan di Bandung Techno Park.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(fontSize: 16, height: 26 / 16),
               ),
             ),
             //Action
-            const Gap(50),
+            const Gap(10),
             ButtonWidget(
-              text: 'Mulai Belajar Yuk!',
+              text: 'Mulai Aplikasi',
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => const SignUpPage(),

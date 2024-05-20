@@ -5,7 +5,6 @@ class Browse {
   final String image;
   final String title;
   final int itemCount;
-
   Browse({required this.image, required this.title, required this.itemCount});
 }
 
@@ -27,7 +26,7 @@ class BrowseTileWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: Image.network(browse.image).image)),
+                    image: AssetImage('assets/images/${browse.image}'))),
           ),
         ),
         Padding(
@@ -48,7 +47,7 @@ class BrowseTileWidget extends StatelessWidget {
                     ),
                     Text('${browse.itemCount} Views',
                         style: GoogleFonts.inter(
-                            fontSize: 14, color: const Color(0xFF909FB4)))
+                            fontSize: 14, color: Color.fromARGB(255, 70, 76, 85)))
                   ],
                 ),
               ]),

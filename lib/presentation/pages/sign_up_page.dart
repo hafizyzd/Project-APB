@@ -48,7 +48,7 @@ class SignUpPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              'Daftar Akun Baru Untuk Belajar Lebih Seru',
+              'Daftar Akun Untuk Peminjaman Ruangan Bandung Techno Park',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                   color: const Color(0xFF0D1220),

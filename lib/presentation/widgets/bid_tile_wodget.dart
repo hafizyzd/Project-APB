@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,13 +7,14 @@ class Bid {
   final String image;
   final String title;
   final String ends;
-  final String price;
+  // final String price;
 
   Bid(
       {required this.image,
       required this.title,
       required this.ends,
-      required this.price});
+      // required this.price
+      });
 }
 
 class BidTileWidget extends StatelessWidget {
@@ -32,7 +33,8 @@ class BidTileWidget extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: Image.network(bid.image).image)),
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/${bid.image}'))),
           ),
         ),
         Padding(
@@ -55,32 +57,30 @@ class BidTileWidget extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                           children: [
-                            const TextSpan(text: 'Durasi '),
                             TextSpan(
                                 text: bid.ends,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 208, 5, 39)))
+                                    color: const Color(0xFF909FB4)))
                           ],
                           style: GoogleFonts.inter(
                               fontSize: 14, color: const Color(0xFF909FB4))),
                     )
                   ],
                 ),
-                // Spacer(),
-                Row(
-                  children: [
-                    SvgPicture.asset('assets/svgs/bid.svg'),
-                    const Gap(4),
-                    Text(
-                      bid.price,
-                      style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: const Color(0xFF0D1220)),
-                    )
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     SvgPicture.asset('assets/svgs/bid.svg'),
+                //     const Gap(4),
+                //     Text(
+                //       bid.price,
+                //       style: GoogleFonts.inter(
+                //           fontWeight: FontWeight.w500,
+                //           fontSize: 16,
+                //           color: const Color(0xFF0D1220)),
+                //     )
+                //   ],
+                // )
               ]),
         )
       ]),
