@@ -6,6 +6,8 @@ import 'package:nft/constants/color_constant.dart';
 import 'package:nft/presentation/widgets/bid_tile_wodget.dart';
 import 'package:nft/presentation/widgets/browse_tile_widget.dart';
 import 'package:nft/presentation/widgets/page_widget.dart';
+import 'package:nft/presentation/pages/form_page.dart';
+import 'package:nft/presentation/pages/account_page.dart';
 
 class DiscoverPage extends StatelessWidget {
   const DiscoverPage({super.key});
@@ -13,12 +15,13 @@ class DiscoverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageWidget(
-        bottomNavigationBar: _bottomNavigationBar(),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [_userInfo(), _popularBids(), _browse()],
-          ),
-        ));
+      bottomNavigationBar: _bottomNavigationBar(context),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [_userInfo(), _popularBids(), _browse()],
+        ),
+      ),
+    );
   }
 
   Widget _userInfo() => Padding(
@@ -40,7 +43,6 @@ class DiscoverPage extends StatelessWidget {
                   child: Image.asset('assets/images/User1.png'),
                 ),
                 const Gap(12),
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -87,8 +89,7 @@ class DiscoverPage extends StatelessWidget {
           image:
               'galeri-07.jpg',
           title: "Rent Office",
-          ends: "Ruangan Berkapasitas 30 orang",
-          ),
+          ends: "Ruangan Berkapasitas 30 orang"),
       Bid(
           image:
               'galeri-09.jpg',
@@ -98,8 +99,7 @@ class DiscoverPage extends StatelessWidget {
           image:
               'galeri-05.jpg',
           title: "Training Room",
-          ends: "Ruangan Berkapasitas 30 orang"
-      ),
+          ends: "Ruangan Berkapasitas 30 orang")
     ];
 
     return Padding(
@@ -118,20 +118,11 @@ class DiscoverPage extends StatelessWidget {
   Widget _browse() {
     var browse = [
       Browse(
-          image:
-              'galeri-05.jpg',
-          title: "Aula",
-          itemCount: 10000),
+          image: 'galeri-05.jpg', title: "Aula", itemCount: 10000),
       Browse(
-          image:
-              'galeri-07.jpg',
-          title: "Coworking Shared",
-          itemCount: 10000),
+          image: 'galeri-07.jpg', title: "Coworking Shared", itemCount: 10000),
       Browse(
-          image:
-              "galeri-06.jpg",
-          title: "Membuat Ketupat",
-          itemCount: 10000),
+          image: "galeri-06.jpg", title: "Membuat Ketupat", itemCount: 10000),
     ];
 
     return Padding(
@@ -179,27 +170,60 @@ class DiscoverPage extends StatelessWidget {
     );
   }
 
-  Widget _bottomNavigationBar() {
+  Widget _bottomNavigationBar(BuildContext context) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem> [
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home, color: Color(0xFFED3C35)),
-          label: 'Home',
+          icon: Icon(Icons.playlist_add_check_circle_rounded, size: 26, color: Color(0xFFED3C35)),
+          label: 'Ruangan',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.games_outlined, color: Color(0xFFED3C35)),
-          label: 'Game',
+          icon: Icon(Icons.text_snippet_rounded, size: 26, color: Color(0xFFED3C35)),
+          label: 'Form',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.message_outlined, color: Color(0xFFED3C35)),
-          label: 'Ulasan',
+          icon: Icon(Icons.check_circle, size: 26, color: Color(0xFFED3C35)),
+          label: 'Status',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined, color: Color(0xFFED3C35),),
-          label: 'Akun'
+          icon: Icon(Icons.account_circle, size: 26, color: Color(0xFFED3C35)),
+          label: 'Akun',
         ),
       ],
-  );
-
+      selectedItemColor: const Color(0xFFED3C35), // Selected icon and label color
+      unselectedItemColor: Colors.grey, // Unselected icon and label color
+      showSelectedLabels: true, // Show labels for selected items
+      showUnselectedLabels: true, // Show labels for unselected items
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DiscoverPage()),
+            );
+            break;
+          case 1:
+            // Navigasi ke halaman Form Peminjaman
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => FormPage()),
+            // );
+            break;
+          case 2:
+            // Navigasi ke halaman Status Ruangan
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => StatusPage()),
+            // );
+            break;
+          case 3:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AccountPage()),
+            );
+            break;
+        }
+      },
+    );
   }
 }

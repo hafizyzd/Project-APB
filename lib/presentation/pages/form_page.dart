@@ -7,8 +7,8 @@ import 'package:nft/presentation/widgets/page_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+class FromPeminjamanPage extends StatelessWidget {
+  const FromPeminjamanPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class SignInPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              'Mudah Peminjaman Ruangan',
+              'Ini Sign punya form',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                   color: const Color(0xFF0D1220),
