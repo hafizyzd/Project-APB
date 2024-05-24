@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:nft/presentation/pages/dicover_page.dart';
+import 'package:nft/presentation/pages/form_page.dart';
+import 'package:nft/presentation/pages/account_page.dart';
+import 'package:nft/presentation/pages/status_ruangan.dart';
+
+class BottomNavigationWidget extends StatelessWidget {
+  final int selectedIndex;
+
+  const BottomNavigationWidget({super.key, required this.selectedIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.playlist_add_check_circle_rounded, size: 26, color: Color(0xFFED3C35)),
+          label: 'Ruangan',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.text_snippet_rounded, size: 26, color: Color(0xFFED3C35)),
+          label: 'Form',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.check_circle, size: 26, color: Color(0xFFED3C35)),
+          label: 'Status',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle, size: 26, color: Color(0xFFED3C35)),
+          label: 'Akun',
+        ),
+      ],
+      currentIndex: selectedIndex,
+      selectedItemColor: const Color(0xFFED3C35),
+      unselectedItemColor: Colors.grey,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const DiscoverPage()),
+            );
+            break;
+          case 1:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => FormPage()),
+            );
+            break;
+          case 2:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => StatusPage()),
+            );
+            break;
+          case 3:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => AccountPage()),
+            );
+            break;
+        }
+      },
+    );
+  }
+}

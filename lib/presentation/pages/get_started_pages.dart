@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nft/presentation/pages/sign_up_page.dart';
-import 'package:nft/presentation/widgets/button_widget.dart';
+import 'package:nft/presentation/pages/sign_in_page.dart';
 import 'package:nft/presentation/widgets/page_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +9,13 @@ class GetStartedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Navigate to SignInPage after 3 seconds
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const SignInPage(),
+      ));
+    });
+
     return PageWidget(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -46,14 +52,6 @@ class GetStartedPage extends StatelessWidget {
             ),
             //Action
             const Gap(10),
-            ButtonWidget(
-              text: 'Mulai Aplikasi',
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const SignUpPage(),
-                ));
-              },
-            )
           ],
         ),
       ),
