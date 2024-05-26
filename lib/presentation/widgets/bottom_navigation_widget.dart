@@ -14,19 +14,19 @@ class BottomNavigationWidget extends StatelessWidget {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.playlist_add_check_circle_rounded, size: 26, color: Color(0xFFED3C35)),
+          icon: Icon(Icons.playlist_add_check_circle_rounded, size: 26),
           label: 'Ruangan',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.text_snippet_rounded, size: 26, color: Color(0xFFED3C35)),
+          icon: Icon(Icons.text_snippet_rounded, size: 26),
           label: 'Form',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.check_circle, size: 26, color: Color(0xFFED3C35)),
+          icon: Icon(Icons.check_circle, size: 26),
           label: 'Status',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle, size: 26, color: Color(0xFFED3C35)),
+          icon: Icon(Icons.account_circle, size: 26),
           label: 'Akun',
         ),
       ],
@@ -35,6 +35,7 @@ class BottomNavigationWidget extends StatelessWidget {
       unselectedItemColor: Colors.grey,
       showSelectedLabels: true,
       showUnselectedLabels: true,
+      type: BottomNavigationBarType.fixed, // Menambahkan properti ini
       onTap: (index) {
         switch (index) {
           case 0:

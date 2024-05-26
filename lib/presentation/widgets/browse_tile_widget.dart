@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'button_widget.dart'; // Pastikan path ini benar
+import 'package:nft/presentation/pages/detail_room.dart';
 
 class Browse {
   final String image;
   final String title;
-  final int itemCount;
-  Browse({required this.image, required this.title, required this.itemCount});
+  Browse({required this.image, required this.title});
 }
 
 class BrowseTileWidget extends StatelessWidget {
@@ -30,27 +32,34 @@ class BrowseTileWidget extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      browse.title,
-                      style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: const Color(0xFF0D1220)),
-                    ),
-                    Text('${browse.itemCount} Views',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, color: Color.fromARGB(255, 70, 76, 85)))
-                  ],
+          padding: const EdgeInsets.all(4),
+          child: Column(
+            children: [
+              Text(
+                browse.title,
+                style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: const Color(0xFF0D1220)),
+              ),
+              const Gap(4),
+              Center(
+                child: ButtonWidget(
+                  text: 'Detail',
+                  onPressed: () {
+                    // Navigasi ke halaman RoomDetailPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RoomDetailPage()),
+                    );
+                  },
+                  isFullWidth: false,
                 ),
-              ]),
+              ),
+              const Gap(4)
+            ],
+          ),
         )
       ]),
     );

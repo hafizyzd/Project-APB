@@ -31,23 +31,23 @@ class DiscoverPage extends StatelessWidget {
       Bid(
           image: 'galeri-06.jpg',
           title: "Coworking Shared",
-          ends: "Ruangan Berkapasitas 30 orang"),
+          ends: "Ruangan Bekerja"),
       Bid(
           image: 'galeri-08.jpg',
           title: "Coworking Private",
-          ends: "Ruangan Berkapasitas 30 orang"),
+          ends: "Ruangan Bekerja"),
       Bid(
           image: 'galeri-07.jpg',
           title: "Rent Office",
-          ends: "Ruangan Berkapasitas 30 orang"),
+          ends: "Ruangan Bekerja"),
       Bid(
           image: 'galeri-09.jpg',
           title: "R. Meeting",
-          ends: "Ruangan Berkapasitas 30 orang"),
+          ends: "Ruangan Bekerja"),
       Bid(
           image: 'galeri-05.jpg',
           title: "Training Room",
-          ends: "Ruangan Berkapasitas 30 orang")
+          ends: "Ruangan Bekerja")
     ];
 
     return Padding(
@@ -66,11 +66,11 @@ class DiscoverPage extends StatelessWidget {
   Widget _browse() {
     var browse = [
       Browse(
-          image: 'galeri-05.jpg', title: "Aula", itemCount: 10000),
+          image: 'galeri-05.jpg', title: "R Meeting"),
       Browse(
-          image: 'galeri-07.jpg', title: "Coworking Shared", itemCount: 10000),
+          image: 'galeri-07.jpg', title: "Coworking Shared"),
       Browse(
-          image: "galeri-06.jpg", title: "Membuat Ketupat", itemCount: 10000),
+          image: "galeri-06.jpg", title: "Training"),
     ];
 
     return Padding(

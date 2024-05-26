@@ -27,7 +27,7 @@ class GetStartedPage extends StatelessWidget {
               width: 450,
               child: Image.asset('assets/images/new-logo-2.png')),
             // Title
-            const Gap(10),
+            const Gap(5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(

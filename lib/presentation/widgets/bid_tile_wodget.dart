@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nft/presentation/widgets/button_widget.dart';
+import 'package:nft/presentation/pages/detail_room.dart';
 
 class Bid {
   final String image;
   final String title;
   final String ends;
-  // final String price;
 
-  Bid(
-      {required this.image,
-      required this.title,
-      required this.ends,
-      // required this.price
-      });
+  Bid({
+    required this.image,
+    required this.title,
+    required this.ends,
+  });
 }
 
 class BidTileWidget extends StatelessWidget {
@@ -53,34 +52,32 @@ class BidTileWidget extends StatelessWidget {
                           fontSize: 16,
                           color: const Color(0xFF0D1220)),
                     ),
-                    const Gap(8),
-                    RichText(
-                      text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: bid.ends,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: const Color(0xFF909FB4)))
-                          ],
+                    const Gap(4),
+                    Row(
+                      children: [
+                        Text(
+                          bid.ends,
                           style: GoogleFonts.inter(
-                              fontSize: 14, color: const Color(0xFF909FB4))),
-                    )
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF909FB4)),
+                        ),
+                        const Gap(8),
+                        ButtonWidget(
+                          text: 'Detail',
+                          onPressed: () {
+                            // Navigasi ke halaman RoomDetailPage
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RoomDetailPage()),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     SvgPicture.asset('assets/svgs/bid.svg'),
-                //     const Gap(4),
-                //     Text(
-                //       bid.price,
-                //       style: GoogleFonts.inter(
-                //           fontWeight: FontWeight.w500,
-                //           fontSize: 16,
-                //           color: const Color(0xFF0D1220)),
-                //     )
-                //   ],
-                // )
               ]),
         )
       ]),
