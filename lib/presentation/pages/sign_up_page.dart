@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nft/constants/color_constant.dart';
 import 'package:nft/presentation/pages/dicover_page.dart';
 import 'package:nft/presentation/pages/sign_in_page.dart';
 import 'package:nft/presentation/widgets/button_widget.dart';
 import 'package:nft/presentation/widgets/input_widget.dart';
 import 'package:nft/presentation/widgets/page_widget.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  String? selectedRole;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +62,9 @@ class SignUpPage extends StatelessWidget {
                                 lable: 'Nama Lengkap',
                               ),
                               const InputWidget(
+                                lable: 'Username',
+                              ),
+                              const InputWidget(
                                 lable: 'Email',
                               ),
                               const InputWidget(
@@ -61,6 +72,41 @@ class SignUpPage extends StatelessWidget {
                                 isPassword: true,
                               ),
                               const Gap(10),
+                              DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: const Color(0xFFF7F9FC),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: const BorderSide(color: Colors.transparent),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: BorderSide(color: ColorConstant.primary),
+                                  ),
+                                ),
+                                value: selectedRole,
+                                items: <String>['Penyewa', 'Pengguna']
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value, style: GoogleFonts.inter(fontSize: 16)),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedRole = newValue;
+                                  });
+                                },
+                                hint: Text(
+                                  'Role',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16,
+                                    color: const Color(0xFF0D1220),
+                                  ),
+                                ),
+                              ),
+                              const Gap(30),
                               Builder(builder: (context) {
                                 return ButtonWidget(
                                   text: 'Daftar',
