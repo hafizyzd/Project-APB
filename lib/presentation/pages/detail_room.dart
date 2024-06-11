@@ -7,14 +7,16 @@ import 'package:nft/presentation/widgets/page_widget.dart';
 import 'package:nft/presentation/pages/form_page.dart';
 
 class RoomDetailPage extends StatelessWidget {
+  const RoomDetailPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageWidget(
-      bottomNavigationBar: BottomNavigationWidget(selectedIndex: 0),
+      bottomNavigationBar: const BottomNavigationWidget(selectedIndex: 0),
       child: Column(
         children: [
           const Gap(20),
-          UserInfoWidget(), // Pengganti AppBar
+          const UserInfoWidget(), // Pengganti AppBar
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -25,10 +27,10 @@ class RoomDetailPage extends StatelessWidget {
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: AssetImage('assets/images/galeri-07.jpg'), // Ganti dengan path gambar lokal Anda
                             fit: BoxFit.cover,
                           ),
@@ -124,7 +126,7 @@ class RoomDetailPage extends StatelessWidget {
                         text: 'Pinjam Ruangan',
                         onPressed: () {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => FormPage(),
+                          builder: (context) => const FormPage(),
                         ));
                         },
                         isFullWidth: false, // Set sesuai kebutuhan

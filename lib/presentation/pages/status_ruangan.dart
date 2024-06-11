@@ -28,7 +28,7 @@ class StatusPage extends StatelessWidget {
       child: Column(
         children: [
           const Gap(20),
-          UserInfoWidget(),
+          const UserInfoWidget(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

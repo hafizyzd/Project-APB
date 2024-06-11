@@ -51,7 +51,7 @@ class BrowseTileWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RoomDetailPage()),
+                          builder: (context) => const RoomDetailPage()),
                     );
                   },
                   isFullWidth: false,

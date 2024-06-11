@@ -7,6 +7,8 @@ import 'package:nft/presentation/widgets/page_widget.dart';
 class AccountPage extends StatelessWidget {
   final int _selectedIndex = 3;
 
+  const AccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageWidget(

@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nft/constants/color_constant.dart';
 
 class UserInfoWidget extends StatelessWidget {
+  const UserInfoWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,7 +42,7 @@ class UserInfoWidget extends StatelessWidget {
                   Text(
                     'Penyewa',
                     style: GoogleFonts.inter(
-                        fontSize: 14, color: Color.fromARGB(255, 48, 52, 59)),
+                        fontSize: 14, color: const Color.fromARGB(255, 48, 52, 59)),
                   ),
                 ],
               )

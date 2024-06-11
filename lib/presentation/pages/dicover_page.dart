@@ -13,12 +13,12 @@ class DiscoverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageWidget(
-      bottomNavigationBar: BottomNavigationWidget(selectedIndex: 0),
+      bottomNavigationBar: const BottomNavigationWidget(selectedIndex: 0),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const Gap(20),
-            UserInfoWidget(), 
+            const UserInfoWidget(), 
             _popularBids(),
             _browse()],
         ),

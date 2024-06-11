@@ -6,6 +6,8 @@ import 'package:nft/presentation/widgets/user_info_widget.dart';
 import 'package:nft/presentation/widgets/page_widget.dart';
 
 class FormPage extends StatefulWidget {
+  const FormPage({super.key});
+
   @override
   _FormPageState createState() => _FormPageState();
 }
@@ -69,7 +71,7 @@ class _FormPageState extends State<FormPage> {
           child: Column(
             children: [
               const Gap(20),
-              UserInfoWidget(),
+              const UserInfoWidget(),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Form(

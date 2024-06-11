@@ -47,7 +47,7 @@ class BottomNavigationWidget extends StatelessWidget {
           case 1:
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FormPage()),
+              MaterialPageRoute(builder: (context) => const FormPage()),
             );
             break;
           case 2:
@@ -59,7 +59,7 @@ class BottomNavigationWidget extends StatelessWidget {
           case 3:
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => AccountPage()),
+              MaterialPageRoute(builder: (context) => const AccountPage()),
             );
             break;
         }
