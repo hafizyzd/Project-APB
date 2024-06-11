@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   http: ^1.2.1
   shared_preferences: ^2.0.6
+  path_provider: ^2.1.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +48,14 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/images/DSC00050-768x512.jpg
+    - assets/images/DSC00086-1-768x512.jpg
+    - assets/images/DSC00331-1024x683.jpg
+    - assets/images/galeri-05.jpg
+    - assets/images/galeri-06.jpg
+    - assets/images/galeri-07.jpg
+    - assets/images/galeri-08.jpg
+    - assets/images/galeri-09.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

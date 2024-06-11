@@ -4,6 +4,8 @@ import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
 import 'package:btp/presentation/widgets/button_widget.dart';
 import 'package:btp/presentation/widgets/user_info_widget.dart';
 import 'package:btp/presentation/widgets/page_widget.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
@@ -16,12 +18,43 @@ class _FormPageState extends State<FormPage> {
   final int _selectedIndex = 1;
   final _formKey = GlobalKey<FormState>();
 
-  DateTime? _startDate;
-  DateTime? _endDate;
-  TimeOfDay? _startTime;
-  TimeOfDay? _endTime;
+  DateTime? _startDateTime;
+  DateTime? _endDateTime;
 
-  void _selectDate(BuildContext context, bool isStartDate) async {
+  final TextEditingController _namaPeminjamController = TextEditingController();
+  final TextEditingController _jumlahPesertaController = TextEditingController();
+  final TextEditingController _catatanController = TextEditingController();
+  final TextEditingController _lokasiController = TextEditingController();
+  final TextEditingController _hargaController = TextEditingController();
+  final TextEditingController _startDateTimeController = TextEditingController();
+  final TextEditingController _endDateTimeController = TextEditingController();
+
+  String? _selectedRuangan;
+  String _status = 'Pending';
+
+  List<dynamic> _ruanganList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRuangan();
+  }
+
+  Future<void> _fetchRuangan() async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/api/ruangan'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _ruanganList = jsonDecode(response.body);
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gagal mengambil data ruangan')),
+      );
+    }
+  }
+
+  Future<void> _selectDateTime(BuildContext context, bool isStartDateTime) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -30,36 +63,75 @@ class _FormPageState extends State<FormPage> {
     );
 
     if (pickedDate != null) {
-      setState(() {
-        if (isStartDate) {
-          _startDate = pickedDate;
-        } else {
-          _endDate = pickedDate;
-        }
-      });
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (pickedTime != null) {
+        final DateTime pickedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          if (isStartDateTime) {
+            _startDateTime = pickedDateTime;
+            _startDateTimeController.text = _formatDateTime(pickedDateTime);
+          } else {
+            _endDateTime = pickedDateTime;
+            _endDateTimeController.text = _formatDateTime(pickedDateTime);
+          }
+        });
+      }
     }
   }
 
-  void _selectTime(BuildContext context, bool isStartTime) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
+  String _formatDateTime(DateTime dateTime) {
+    return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
 
-    if (pickedTime != null && pickedTime.hour >= 6 && pickedTime.hour < 18) {
-      setState(() {
-        if (isStartTime) {
-          _startTime = pickedTime;
-        } else {
-          _endTime = pickedTime;
-        }
-      });
+  void _updateLokasiDanHarga(String? selectedRuangan) {
+    final ruangan = _ruanganList.firstWhere((r) => r['id_ruangan'].toString() == selectedRuangan);
+    _lokasiController.text = ruangan['lokasi'];
+    _hargaController.text = formatHarga(int.parse(ruangan['harga_ruangan']));
+  }
+
+  String formatHarga(int harga) {
+    return 'Rp ${harga.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match match) => '${match[1]}.',
+    )}';
+  }
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/api/peminjaman'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'nama_peminjam': _namaPeminjamController.text,
+          'id_ruangan': int.parse(_selectedRuangan!),
+          'tanggal_mulai': '${_startDateTime!.year}-${_startDateTime!.month.toString().padLeft(2, '0')}-${_startDateTime!.day.toString().padLeft(2, '0')} ${_startDateTime!.hour.toString().padLeft(2, '0')}:${_startDateTime!.minute.toString().padLeft(2, '0')}',
+          'tanggal_selesai': '${_endDateTime!.year}-${_endDateTime!.month.toString().padLeft(2, '0')}-${_endDateTime!.day.toString().padLeft(2, '0')} ${_endDateTime!.hour.toString().padLeft(2, '0')}:${_endDateTime!.minute.toString().padLeft(2, '0')}',
+          'jumlah': int.parse(_jumlahPesertaController.text),
+          'status': _status,
+          'keterangan': _catatanController.text,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Pengajuan berhasil dikirim')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gagal mengirim pengajuan')),
+        );
+      }
     }
   }
 
@@ -67,201 +139,133 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return PageWidget(
       bottomNavigationBar: BottomNavigationWidget(selectedIndex: _selectedIndex),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Gap(20),
-              const UserInfoWidget(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Nama Peminjam',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Masukkan Nama Peminjam!';
-                          }
-                          return null;
-                        },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Gap(20),
+            const UserInfoWidget(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _namaPeminjamController,
+                      decoration: const InputDecoration(
+                        labelText: 'Nama Peminjam',
                       ),
-                      const Gap(16),
-                      DropdownButtonFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Ruangan',
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: 'rent_office',
-                            child: Text('Rent Office'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'coworking_space_p',
-                            child: Text('Coworking Space Private'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'coworking_space_s',
-                            child: Text('Coworking Space Shared'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'virtual_office',
-                            child: Text('Virtual Office'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'multimedia',
-                            child: Text('Multimedia'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Aula',
-                            child: Text('Aula'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'training',
-                            child: Text('Training'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'overtime',
-                            child: Text('Overtime'),
-                          ),
-                        ],
-                        onChanged: (value) {},
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Masukkan ruangan anda!';
-                          }
-                          return null;
-                        },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Masukkan Nama Peminjam!';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    DropdownButtonFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Ruangan',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Lokasi',
-                        ),
-                        enabled: false,
+                      items: _ruanganList.map((ruangan) {
+                        return DropdownMenuItem(
+                          value: ruangan['id_ruangan'].toString(),
+                          child: Text(ruangan['nama_ruangan']),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRuangan = value as String?;
+                          _updateLokasiDanHarga(_selectedRuangan);
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Masukkan ruangan anda!';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      controller: _lokasiController,
+                      decoration: const InputDecoration(
+                        labelText: 'Lokasi',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Harga',
-                        ),
-                        enabled: false,
+                      enabled: false,
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      controller: _hargaController,
+                      decoration: const InputDecoration(
+                        labelText: 'Harga',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Jumlah Peserta',
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Masukkan Jumlah Peserta!';
-                          }
-                          return null;
-                        },
+                      enabled: false,
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      controller: _jumlahPesertaController,
+                      decoration: const InputDecoration(
+                        labelText: 'Jumlah Peserta',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Tanggal Mulai Peminjaman',
-                        ),
-                        controller: TextEditingController(
-                          text: _startDate == null
-                              ? ''
-                              : '${_startDate!.day}/${_startDate!.month}/${_startDate!.year}',
-                        ),
-                        onTap: () => _selectDate(context, true),
-                        readOnly: true,
-                        validator: (value) {
-                          if (_startDate == null) {
-                            return 'Masukkan Mulai Peminjaman!';
-                          }
-                          return null;
-                        },
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Masukkan Jumlah Peserta!';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Tanggal Mulai Peminjaman',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Tanggal Selesai Peminjaman',
-                        ),
-                        controller: TextEditingController(
-                          text: _endDate == null
-                              ? ''
-                              : '${_endDate!.day}/${_endDate!.month}/${_endDate!.year}',
-                        ),
-                        onTap: () => _selectDate(context, false),
-                        readOnly: true,
-                        validator: (value) {
-                          if (_endDate == null) {
-                            return 'Masukkan Selesai Peminjaman!';
-                          }
-                          return null;
-                        },
+                      controller: _startDateTimeController,
+                      onTap: () => _selectDateTime(context, true),
+                      readOnly: true,
+                      validator: (value) {
+                        if (_startDateTime == null) {
+                          return 'Masukkan Mulai Peminjaman!';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Tanggal Selesai Peminjaman',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Jam Mulai Peminjaman',
-                        ),
-                        controller: TextEditingController(
-                          text: _startTime == null
-                              ? ''
-                              : '${_startTime!.format(context)}',
-                        ),
-                        onTap: () => _selectTime(context, true),
-                        readOnly: true,
-                        validator: (value) {
-                          if (_startTime == null) {
-                            return 'Masukkan Mulai Peminjaman!';
-                          }
-                          return null;
-                        },
+                      controller: _endDateTimeController,
+                      onTap: () => _selectDateTime(context, false),
+                      readOnly: true,
+                      validator: (value) {
+                        if (_endDateTime == null) {
+                          return 'Masukkan Selesai Peminjaman!';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(16),
+                    TextFormField(
+                      controller: _catatanController,
+                      decoration: const InputDecoration(
+                        labelText: 'Catatan',
                       ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Jam Selesai Peminjaman',
-                        ),
-                        controller: TextEditingController(
-                          text: _endTime == null
-                              ? ''
-                              : '${_endTime!.format(context)}',
-                        ),
-                        onTap: () => _selectTime(context, false),
-                        readOnly: true,
-                        validator: (value) {
-                          if (_endTime == null) {
-                            return 'Masukkan Selesai Peminjaman!';
-                          }
-                          return null;
-                        },
-                      ),
-                      const Gap(16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Catatan',
-                        ),
-                        maxLines: 4,
-                      ),
-                      const Gap(16),
-                      ButtonWidget(
-                        text: 'Kirim Pengajuan',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Process the submission
-                          }
-                        },
-                      )
-                    ],
-                  ),
+                      maxLines: 4,
+                    ),
+                    const Gap(16),
+                    ButtonWidget(
+                      text: 'Kirim Pengajuan',
+                      onPressed: _submitForm,
+                    )
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

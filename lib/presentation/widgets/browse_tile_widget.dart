@@ -7,7 +7,9 @@ import 'package:btp/presentation/pages/detail_room.dart';
 class Browse {
   final String image;
   final String title;
-  Browse({required this.image, required this.title});
+  final dynamic ruangan;
+
+  Browse({required this.image, required this.title, required this.ruangan});
 }
 
 class BrowseTileWidget extends StatelessWidget {
@@ -28,12 +30,13 @@ class BrowseTileWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/images/${browse.image}'))),
+                    image: AssetImage(browse.image))), // Menggunakan AssetImage untuk gambar lokal
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 browse.title,
@@ -42,7 +45,7 @@ class BrowseTileWidget extends StatelessWidget {
                     fontSize: 16,
                     color: const Color(0xFF0D1220)),
               ),
-              const Gap(4),
+              const Gap(8),
               Center(
                 child: ButtonWidget(
                   text: 'Detail',
@@ -51,16 +54,15 @@ class BrowseTileWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RoomDetailPage()),
+                          builder: (context) => RoomDetailPage(ruangan: browse.ruangan)),
                     );
                   },
                   isFullWidth: false,
                 ),
               ),
-              const Gap(4)
             ],
           ),
-        )
+        ),
       ]),
     );
   }

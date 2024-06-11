@@ -5,9 +5,21 @@ import 'package:btp/presentation/widgets/user_info_widget.dart';
 import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
 import 'package:btp/presentation/widgets/page_widget.dart';
 import 'package:btp/presentation/pages/form_page.dart';
+import 'package:intl/intl.dart';
 
 class RoomDetailPage extends StatelessWidget {
-  const RoomDetailPage({super.key});
+  final dynamic ruangan;
+
+  const RoomDetailPage({super.key, required this.ruangan});
+
+  String _formatCurrency(String amount) {
+    final formatter = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: '',
+      decimalDigits: 0,
+    );
+    return formatter.format(int.parse(amount));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +42,7 @@ class RoomDetailPage extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             image: AssetImage('assets/images/galeri-07.jpg'), // Ganti dengan path gambar lokal Anda
                             fit: BoxFit.cover,
                           ),
@@ -47,57 +59,59 @@ class RoomDetailPage extends StatelessWidget {
                           0: FlexColumnWidth(2),
                           1: FlexColumnWidth(3),
                         },
-                        children: const [
+                        children: [
                           TableRow(children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('Nama Ruangan'),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Multimedia'),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(ruangan['nama_ruangan']),
                             ),
                           ]),
                           TableRow(children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('Kapasitas'),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('50 Orang'),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('${ruangan['kapasitas_ruangan']} Orang'),
                             ),
                           ]),
                           TableRow(children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('Lokasi'),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Gedung A'),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(ruangan['lokasi']),
                             ),
                           ]),
                           TableRow(children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('Harga'),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Rp70000'),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Rp${_formatCurrency(ruangan['harga_ruangan'])}'),
                             ),
                           ]),
                           TableRow(children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('Status'),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Tersedia',
-                                style: TextStyle(color: Colors.green),
+                                ruangan['tersedia'] == 1 ? 'Tersedia' : 'Tidak Tersedia',
+                                style: TextStyle(
+                                  color: ruangan['tersedia'] == 1 ? Colors.green : Colors.red,
+                                ),
                               ),
                             ),
                           ]),
@@ -125,9 +139,9 @@ class RoomDetailPage extends StatelessWidget {
                       child: ButtonWidget(
                         text: 'Pinjam Ruangan',
                         onPressed: () {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const FormPage(),
-                        ));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const FormPage(),
+                          ));
                         },
                         isFullWidth: false, // Set sesuai kebutuhan
                       ),

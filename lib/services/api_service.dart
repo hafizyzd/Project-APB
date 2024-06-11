@@ -7,7 +7,7 @@ class ApiService {
 
   Future<void> signUp(String name, String username, String email, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/register'),
+      Uri.parse('${baseUrl}register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'nama_lengkap': name,
@@ -18,16 +18,20 @@ class ApiService {
     );
 
     if (response.statusCode == 201) {
-      // Successfully signed up
+      final responseBody = jsonDecode(response.body);
+      final token = responseBody['token'];
+      final user = responseBody['user'];
+
+      await _saveToken(token);
+      await _saveUserData(user);
     } else {
-      // Handle error
       throw Exception('Failed to sign up: ${response.body}');
     }
   }
 
   Future<void> login(String email, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/login'),
+      Uri.parse('${baseUrl}login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': email,
@@ -36,10 +40,13 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      final token = jsonDecode(response.body)['token'];
+      final responseBody = jsonDecode(response.body);
+      final token = responseBody['token'];
+      final user = responseBody['user'];
+
       await _saveToken(token);
+      await _saveUserData(user);
     } else {
-      // Handle error
       throw Exception('Failed to login: ${response.body}');
     }
   }
@@ -49,13 +56,35 @@ class ApiService {
     await prefs.setString('auth_token', token);
   }
 
+  Future<void> _saveUserData(Map<String, dynamic> user) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_name', user['username']);
+    await prefs.setString('user_email', user['email']);
+    await prefs.setString('user_role', user['role']);
+    await prefs.setString('user_full_name', user['nama_lengkap']);
+  }
+
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('auth_token');
   }
 
+  Future<Map<String, String?>> getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      'username': prefs.getString('user_name'),
+      'email': prefs.getString('user_email'),
+      'role': prefs.getString('user_role'),
+      'nama_lengkap': prefs.getString('user_full_name'),
+    };
+  }
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
+    await prefs.remove('user_name');
+    await prefs.remove('user_email');
+    await prefs.remove('user_role');
+    await prefs.remove('user_full_name');
   }
 }
