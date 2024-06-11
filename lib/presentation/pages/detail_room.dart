@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:nft/presentation/widgets/button_widget.dart';
-import 'package:nft/presentation/widgets/user_info_widget.dart';
-import 'package:nft/presentation/widgets/bottom_navigation_widget.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
-import 'package:nft/presentation/pages/form_page.dart';
+import 'package:btp/presentation/widgets/button_widget.dart';
+import 'package:btp/presentation/widgets/user_info_widget.dart';
+import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
+import 'package:btp/presentation/pages/form_page.dart';
 
 class RoomDetailPage extends StatelessWidget {
   const RoomDetailPage({super.key});

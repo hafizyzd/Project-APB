@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nft/presentation/widgets/bid_tile_wodget.dart';
-import 'package:nft/presentation/widgets/browse_tile_widget.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
-import 'package:nft/presentation/widgets/bottom_navigation_widget.dart';
-import 'package:nft/presentation/widgets/user_info_widget.dart';
+import 'package:btp/presentation/widgets/bid_tile_wodget.dart';
+import 'package:btp/presentation/widgets/browse_tile_widget.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
+import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
+import 'package:btp/presentation/widgets/user_info_widget.dart';
 
 class DiscoverPage extends StatelessWidget {
   const DiscoverPage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nft/presentation/pages/get_started_pages.dart';
+import 'package:btp/presentation/pages/get_started_pages.dart';
 
 void main() {
   runApp(const MyApp());

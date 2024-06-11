@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
-import 'package:nft/presentation/widgets/bottom_navigation_widget.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
+import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
 
 class AccountPage extends StatelessWidget {
   final int _selectedIndex = 3;

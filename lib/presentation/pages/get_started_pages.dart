@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nft/presentation/pages/sign_in_page.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
+import 'package:btp/presentation/pages/sign_in_page.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
 

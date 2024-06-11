@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nft/presentation/pages/discover_page.dart';
-import 'package:nft/presentation/pages/sign_up_page.dart';
-import 'package:nft/presentation/widgets/button_widget.dart';
-import 'package:nft/presentation/widgets/input_widget.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
-import 'package:nft/services/api_service.dart';
+import 'package:btp/presentation/pages/discover_page.dart';
+import 'package:btp/presentation/pages/sign_up_page.dart';
+import 'package:btp/presentation/widgets/button_widget.dart';
+import 'package:btp/presentation/widgets/input_widget.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
+import 'package:btp/services/api_service.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nft/presentation/pages/discover_page.dart';
-import 'package:nft/presentation/pages/form_page.dart';
-import 'package:nft/presentation/pages/account_page.dart';
-import 'package:nft/presentation/pages/status_ruangan.dart';
+import 'package:btp/presentation/pages/discover_page.dart';
+import 'package:btp/presentation/pages/form_page.dart';
+import 'package:btp/presentation/pages/account_page.dart';
+import 'package:btp/presentation/pages/status_ruangan.dart';
 
 class BottomNavigationWidget extends StatelessWidget {
   final int selectedIndex;

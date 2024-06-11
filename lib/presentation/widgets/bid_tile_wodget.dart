@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nft/presentation/widgets/button_widget.dart';
-import 'package:nft/presentation/pages/detail_room.dart';
+import 'package:btp/presentation/widgets/button_widget.dart';
+import 'package:btp/presentation/pages/detail_room.dart';
 
 class Bid {
   final String image;

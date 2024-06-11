@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:nft/presentation/widgets/bottom_navigation_widget.dart';
-import 'package:nft/presentation/widgets/button_widget.dart';
-import 'package:nft/presentation/widgets/user_info_widget.dart';
-import 'package:nft/presentation/widgets/page_widget.dart';
+import 'package:btp/presentation/widgets/bottom_navigation_widget.dart';
+import 'package:btp/presentation/widgets/button_widget.dart';
+import 'package:btp/presentation/widgets/user_info_widget.dart';
+import 'package:btp/presentation/widgets/page_widget.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});

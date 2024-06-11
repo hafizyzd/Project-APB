@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nft/constants/color_constant.dart';
+import 'package:btp/constants/color_constant.dart';
 
 class InputWidget extends StatelessWidget {
   final String label;
