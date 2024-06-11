@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nft/presentation/pages/dicover_page.dart';
+import 'package:nft/presentation/pages/discover_page.dart';
 import 'package:nft/presentation/pages/sign_up_page.dart';
 import 'package:nft/presentation/widgets/button_widget.dart';
 import 'package:nft/presentation/widgets/input_widget.dart';
 import 'package:nft/presentation/widgets/page_widget.dart';
+import 'package:nft/services/api_service.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
+
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final ApiService apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +60,13 @@ class SignInPage extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              const InputWidget(
-                                lable: 'Email',
+                              InputWidget(
+                                label: 'Email',
+                                controller: emailController,
                               ),
-                              const InputWidget(
-                                lable: 'Password',
+                              InputWidget(
+                                label: 'Password',
+                                controller: passwordController,
                                 isPassword: true,
                               ),
                               const Gap(10),
@@ -62,10 +74,21 @@ class SignInPage extends StatelessWidget {
                                 return ButtonWidget(
                                   text: 'Sign In',
                                   isFullWidth: true,
-                                  onPressed: () {
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      builder: (context) => const DiscoverPage(),
-                                    ));
+                                  onPressed: () async {
+                                    try {
+                                      await apiService.login(
+                                        emailController.text,
+                                        passwordController.text,
+                                      );
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                        builder: (context) => const DiscoverPage(),
+                                      ));
+                                    } catch (e) {
+                                      // Handle error
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Failed to login')),
+                                      );
+                                    }
                                   },
                                 );
                               })

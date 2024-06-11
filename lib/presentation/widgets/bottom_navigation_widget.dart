@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nft/presentation/pages/dicover_page.dart';
+import 'package:nft/presentation/pages/discover_page.dart';
 import 'package:nft/presentation/pages/form_page.dart';
 import 'package:nft/presentation/pages/account_page.dart';
 import 'package:nft/presentation/pages/status_ruangan.dart';
