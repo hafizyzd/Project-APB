@@ -5,6 +5,7 @@ import 'package:btp/presentation/widgets/button_widget.dart';
 import 'package:btp/presentation/widgets/user_info_widget.dart';
 import 'package:btp/presentation/widgets/page_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class FormPage extends StatefulWidget {
@@ -33,11 +34,13 @@ class _FormPageState extends State<FormPage> {
   String _status = 'Pending';
 
   List<dynamic> _ruanganList = [];
+  int? _userId;
 
   @override
   void initState() {
     super.initState();
     _fetchRuangan();
+    _fetchUserId();
   }
 
   Future<void> _fetchRuangan() async {
@@ -52,6 +55,13 @@ class _FormPageState extends State<FormPage> {
         const SnackBar(content: Text('Gagal mengambil data ruangan')),
       );
     }
+  }
+
+  Future<void> _fetchUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userId = prefs.getInt('user_id');
+    });
   }
 
   Future<void> _selectDateTime(BuildContext context, bool isStartDateTime) async {
@@ -115,6 +125,7 @@ class _FormPageState extends State<FormPage> {
         body: jsonEncode({
           'nama_peminjam': _namaPeminjamController.text,
           'id_ruangan': int.parse(_selectedRuangan!),
+          'id_users': _userId,
           'tanggal_mulai': '${_startDateTime!.year}-${_startDateTime!.month.toString().padLeft(2, '0')}-${_startDateTime!.day.toString().padLeft(2, '0')} ${_startDateTime!.hour.toString().padLeft(2, '0')}:${_startDateTime!.minute.toString().padLeft(2, '0')}',
           'tanggal_selesai': '${_endDateTime!.year}-${_endDateTime!.month.toString().padLeft(2, '0')}-${_endDateTime!.day.toString().padLeft(2, '0')} ${_endDateTime!.hour.toString().padLeft(2, '0')}:${_endDateTime!.minute.toString().padLeft(2, '0')}',
           'jumlah': int.parse(_jumlahPesertaController.text),
@@ -125,11 +136,11 @@ class _FormPageState extends State<FormPage> {
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Pengajuan berhasil dikirim')),
+          const SnackBar(content: Text('Pengajuan Berhasil Dikirim!')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gagal mengirim pengajuan')),
+          const SnackBar(content: Text('Gagal Mengirim Pengajuan!')),
         );
       }
     }

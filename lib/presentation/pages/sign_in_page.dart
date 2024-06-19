@@ -84,9 +84,8 @@ class _SignInPageState extends State<SignInPage> {
                                         builder: (context) => const DiscoverPage(),
                                       ));
                                     } catch (e) {
-                                      // Handle error
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Failed to login')),
+                                        const SnackBar(content: Text('Failed To Login~')),
                                       );
                                     }
                                   },

@@ -14,7 +14,7 @@ class UserInfoWidget extends StatefulWidget {
 
 class _UserInfoWidgetState extends State<UserInfoWidget> {
   final ApiService apiService = ApiService();
-  late Future<Map<String, String?>> _userData;
+  late Future<Map<String, dynamic>> _userData;
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, String?>>(
+    return FutureBuilder<Map<String, dynamic>>(
       future: _userData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

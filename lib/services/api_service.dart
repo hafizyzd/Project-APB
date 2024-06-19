@@ -58,6 +58,7 @@ class ApiService {
 
   Future<void> _saveUserData(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('user_id', user['id_users']);
     await prefs.setString('user_name', user['username']);
     await prefs.setString('user_email', user['email']);
     await prefs.setString('user_role', user['role']);
@@ -69,9 +70,10 @@ class ApiService {
     return prefs.getString('auth_token');
   }
 
-  Future<Map<String, String?>> getUserData() async {
+  Future<Map<String, dynamic>> getUserData() async {
     final prefs = await SharedPreferences.getInstance();
     return {
+      'id_users': prefs.getInt('user_id'),
       'username': prefs.getString('user_name'),
       'email': prefs.getString('user_email'),
       'role': prefs.getString('user_role'),
@@ -82,6 +84,7 @@ class ApiService {
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
+    await prefs.remove('user_id');
     await prefs.remove('user_name');
     await prefs.remove('user_email');
     await prefs.remove('user_role');
